@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const OTP_DIGITS_COUNT = 5;
 function App() {
@@ -6,18 +6,22 @@ function App() {
     new Array(OTP_DIGITS_COUNT).fill("")
   );
   console.log(inputArray);
+  const refArr = useRef([]);
+
+  useEffect(() => {
+    refArr.current[0].focus();
+  }, []);
 
   const handleChange = (value, index) => {
     console.log(value, index);
     // inputArray[index] = value
     // console.log(inputArray)
-    if(isNaN(value))
-    {
+    if (isNaN(value)) {
       return;
     }
 
     const newArr = [...inputArray];
-    newArr[index] = value;
+    newArr[index] = value.slice(-1);
     setInputArray(newArr);
   };
   return (
@@ -31,6 +35,7 @@ function App() {
           type="text"
           value={input}
           onChange={(e) => handleChange(e.target.value, index)}
+          ref={(el) => (refArr.current[index] = el)}
         />
       ))}
     </div>
