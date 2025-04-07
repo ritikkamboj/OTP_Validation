@@ -21,9 +21,21 @@ function App() {
     }
 
     const newArr = [...inputArray];
-    newArr[index] = value.slice(-1);
+    const newValue = value.trim();
+    newArr[index] = newValue.slice(-1);
     setInputArray(newArr);
+
+    newValue &&  refArr.current[index+1].focus();
   };
+
+  const handleKeyDown = (e, index)=>
+  {
+    if(!e.target.value  && e.code ==='Backspace')
+    {
+      refArr.current[index-1].focus();
+    }
+
+  }
   return (
     <div className="app">
       <h1>OTP Validator </h1>
@@ -36,6 +48,7 @@ function App() {
           value={input}
           onChange={(e) => handleChange(e.target.value, index)}
           ref={(el) => (refArr.current[index] = el)}
+          onKeyDown={(e)=> handleKeyDown(e, index)}
         />
       ))}
     </div>
