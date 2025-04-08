@@ -50,7 +50,7 @@ function App() {
       console.log(refArr.current[index-1].value.length);
       const input = refArr.current[index-1];
       const length = input.value.length;
-      input.setSelectionRange(length,length)
+     setTimeout(()=>  input.setSelectionRange(length,length), 0)
       // setFocus(index-1)
     } else if (e.key === "ArrowRight" && index < OTP_DIGITS_COUNT - 1) {
       // refArr.current[index + 1].focus();
