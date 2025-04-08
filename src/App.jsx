@@ -31,20 +31,31 @@ function App() {
   };
 
   const handleKeyDown = (e, index) => {
+    const setFocus = (index) => {
+      const input = refArr.current[index];
+      if (input) {
+        input.focus();
+        const length = input.value.length;
+        input.setSelectionRange(length, length); // 👈 Moves cursor to the end
+      }
+    };
+    
+
     // console.log(e.key)
     if (!e.target.value && e.key === "Backspace" && index > 0) {
+      // refArr.current[index - 1].focus();
+      setFocus(index-1)
+    } else if (e.key === "ArrowLeft" && index > 0) {
       refArr.current[index - 1].focus();
+      console.log(refArr.current[index-1].value.length);
+      const input = refArr.current[index-1];
+      const length = input.value.length;
+      input.setSelectionRange(length,length)
+      // setFocus(index-1)
+    } else if (e.key === "ArrowRight" && index < OTP_DIGITS_COUNT - 1) {
+      // refArr.current[index + 1].focus();
+      setFocus(index+1)
     }
-    else if(e.key === "ArrowLeft" && index >0)
-    {
-      refArr.current[index - 1].focus();
-
-    }
-    else if(e.key=== "ArrowRight" && index < OTP_DIGITS_COUNT-1 )
-    {
-      refArr.current[index + 1].focus();
-    }
-    
   };
   return (
     <div className="app">
