@@ -25,17 +25,27 @@ function App() {
     newArr[index] = newValue.slice(-1);
     setInputArray(newArr);
 
-    newValue &&  refArr.current[index+1].focus();
+    if (index < OTP_DIGITS_COUNT - 1) {
+      newValue && refArr.current[index + 1].focus();
+    }
   };
 
-  const handleKeyDown = (e, index)=>
-  {
-    if(!e.target.value  && e.code ==='Backspace')
-    {
-      refArr.current[index-1].focus();
+  const handleKeyDown = (e, index) => {
+    // console.log(e.key)
+    if (!e.target.value && e.key === "Backspace" && index > 0) {
+      refArr.current[index - 1].focus();
     }
+    else if(e.key === "ArrowLeft" && index >0)
+    {
+      refArr.current[index - 1].focus();
 
-  }
+    }
+    else if(e.key=== "ArrowRight" && index < OTP_DIGITS_COUNT-1 )
+    {
+      refArr.current[index + 1].focus();
+    }
+    
+  };
   return (
     <div className="app">
       <h1>OTP Validator </h1>
@@ -48,7 +58,7 @@ function App() {
           value={input}
           onChange={(e) => handleChange(e.target.value, index)}
           ref={(el) => (refArr.current[index] = el)}
-          onKeyDown={(e)=> handleKeyDown(e, index)}
+          onKeyDown={(e) => handleKeyDown(e, index)}
         />
       ))}
     </div>
